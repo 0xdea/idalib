@@ -16,7 +16,7 @@ bindings are only guaranteed compatible with the latest official IDA Pro/SDK
 release. See the table below for compatibility:
 
 | IDA Pro version | Latest compatible idalib |
-| --------------- | ------------------------ |
+|-----------------|--------------------------|
 | v9.3            | 0.8.0                    |
 | v9.2            | 0.7.2                    |
 | v9.1            | 0.6.1                    |
@@ -61,10 +61,10 @@ name = "example-analyser"
 # ...
 
 [dependencies]
-idalib = "0.7"
+idalib = "0.8"
 
 [build-dependencies]
-idalib-build = "0.7"
+idalib-build = "0.8"
 ```
 
 `build.rs`:

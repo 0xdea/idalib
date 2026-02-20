@@ -10,10 +10,10 @@
 //!
 //! ```toml
 //! [dependencies]
-//! idalib = "0.7"
+//! idalib = "0.8"
 //!
 //! [build-dependencies]
-//! idalib-build = "0.7"
+//! idalib-build = "0.8"
 //! ```
 //!
 //! Here is a basic example of a `build.rs` file:
@@ -91,9 +91,8 @@ pub mod segment;
 pub mod strings;
 pub mod xref;
 
-pub use idalib_sys as ffi;
-
 pub use ffi::IDAError;
+pub use idalib_sys as ffi;
 pub use idb::{IDB, IDBOpenOptions};
 pub use license::{LicenseId, is_valid_license, license_id};
 
