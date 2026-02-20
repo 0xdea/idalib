@@ -91,8 +91,9 @@ pub mod segment;
 pub mod strings;
 pub mod xref;
 
-pub use ffi::IDAError;
 pub use idalib_sys as ffi;
+
+pub use ffi::IDAError;
 pub use idb::{IDB, IDBOpenOptions};
 pub use license::{LicenseId, is_valid_license, license_id};
 
