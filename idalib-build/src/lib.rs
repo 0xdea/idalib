@@ -112,6 +112,8 @@ pub fn configure_idasdk_linkage() {
         // FIXME: this seems to be required otherwise we report missing symbols and bail during
         // linking (seems to be due to autocxx)...
         println!("cargo::rustc-link-arg=/FORCE:UNRESOLVED");
+    } else {
+        println!("cargo::rustc-link-arg=-Wl,-rpath,{}", stubs_path.display());
     }
 }
 
