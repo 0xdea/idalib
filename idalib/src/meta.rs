@@ -1,3 +1,4 @@
+use std::ffi::c_char;
 use std::marker::PhantomData;
 use std::mem;
 
@@ -510,7 +511,7 @@ impl<'a> Metadata<'a> {
         unsafe { idalib_inf_get_max_autoname_len() }
     }
 
-    pub fn nametype(&self) -> i8 {
+    pub fn nametype(&self) -> c_char {
         unsafe { idalib_inf_get_nametype() }
     }
 
@@ -694,7 +695,7 @@ impl<'a> Metadata<'a> {
         unsafe { idalib_inf_get_strlit_break() }
     }
 
-    pub fn strlit_zeroes(&self) -> i8 {
+    pub fn strlit_zeroes(&self) -> c_char {
         unsafe { idalib_inf_get_strlit_zeroes() }
     }
 

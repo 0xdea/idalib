@@ -1,3 +1,4 @@
+use std::ffi::c_char;
 use std::mem;
 
 use bitflags::bitflags;
@@ -187,11 +188,11 @@ impl Operand {
         OperandFlags::from_bits_retain(self.inner.flags)
     }
 
-    pub fn offb(&self) -> i8 {
+    pub fn offb(&self) -> c_char {
         self.inner.offb
     }
 
-    pub fn offo(&self) -> i8 {
+    pub fn offo(&self) -> c_char {
         self.inner.offo
     }
 
@@ -290,7 +291,7 @@ impl Operand {
         }
     }
 
-    pub fn processor_specific_flag1(&self) -> Option<i8> {
+    pub fn processor_specific_flag1(&self) -> Option<c_char> {
         if self.is_processor_specific() {
             Some(self.inner.specflag1)
         } else {
@@ -298,7 +299,7 @@ impl Operand {
         }
     }
 
-    pub fn processor_specific_flag2(&self) -> Option<i8> {
+    pub fn processor_specific_flag2(&self) -> Option<c_char> {
         if self.is_processor_specific() {
             Some(self.inner.specflag2)
         } else {
@@ -306,7 +307,7 @@ impl Operand {
         }
     }
 
-    pub fn processor_specific_flag3(&self) -> Option<i8> {
+    pub fn processor_specific_flag3(&self) -> Option<c_char> {
         if self.is_processor_specific() {
             Some(self.inner.specflag3)
         } else {
@@ -314,7 +315,7 @@ impl Operand {
         }
     }
 
-    pub fn processor_specific_flag4(&self) -> Option<i8> {
+    pub fn processor_specific_flag4(&self) -> Option<c_char> {
         if self.is_processor_specific() {
             Some(self.inner.specflag4)
         } else {
