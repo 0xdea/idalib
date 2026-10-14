@@ -9,7 +9,9 @@ fn configure_and_generate(builder: BindgenBuilder, ida: &Path, output: impl AsRe
         .clang_arg("-xc++")
         .clang_arg(format!("-I{}", ida.display()))
         .clang_args(
-            #[cfg(target_os = "linux")]
+            #[cfg(all(target_os = "linux", target_arch = "aarch64"))]
+            &["-std=c++17", "-D__LINUX__=1", "-D__ARM__=1", "-D__EA64__=1"],
+            #[cfg(all(target_os = "linux", not(target_arch = "aarch64")))]
             &["-std=c++17", "-D__LINUX__=1", "-D__EA64__=1"],
             #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
             &["-std=c++17", "-D__MACOS__=1", "-D__ARM__=1", "-D__EA64__=1"],
@@ -42,7 +44,9 @@ fn main() {
 
     let mut builder = autocxx_build::Builder::new(ffi_path.join("lib.rs"), [ffi_path, &*ida])
         .extra_clang_args(
-            #[cfg(target_os = "linux")]
+            #[cfg(all(target_os = "linux", target_arch = "aarch64"))]
+            &["-std=c++17", "-D__LINUX__=1", "-D__ARM__=1", "-D__EA64__=1"],
+            #[cfg(all(target_os = "linux", not(target_arch = "aarch64")))]
             &["-std=c++17", "-D__LINUX__=1", "-D__EA64__=1"],
             #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
             &["-std=c++17", "-D__MACOS__=1", "-D__ARM__=1", "-D__EA64__=1"],
@@ -61,12 +65,16 @@ fn main() {
 
     #[cfg(target_os = "linux")]
     {
-        builder
+        let b = builder
             .cargo_warnings(false)
             .flag_if_supported("-std=c++17")
             .define("__LINUX__", "1")
-            .define("__EA64__", "1")
-            .compile("libida-stubs");
+            .define("__EA64__", "1");
+
+        #[cfg(target_arch = "aarch64")]
+        let b = b.define("__ARM__", "1");
+
+        b.compile("libida-stubs");
     }
 
     #[cfg(target_os = "macos")]
