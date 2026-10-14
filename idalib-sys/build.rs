@@ -17,7 +17,15 @@ fn configure_and_generate(builder: BindgenBuilder, ida: &Path, output: impl AsRe
             &["-std=c++17", "-D__MACOS__=1", "-D__ARM__=1", "-D__EA64__=1"],
             #[cfg(all(target_os = "macos", target_arch = "x86_64"))]
             &["-std=c++17", "-D__MACOS__=1", "-D__EA64__=1"],
-            #[cfg(target_os = "windows")]
+            #[cfg(all(target_os = "windows", target_arch = "aarch64"))]
+            &[
+                "-std=c++17",
+                "-D__NT__=1",
+                "-D__ARM__=1",
+                "-D__EA64__=1",
+                "-D_CRT_USE_BUILTIN_OFFSETOF",
+            ],
+            #[cfg(all(target_os = "windows", not(target_arch = "aarch64")))]
             &[
                 "-std=c++17",
                 "-D__NT__=1",
@@ -52,7 +60,15 @@ fn main() {
             &["-std=c++17", "-D__MACOS__=1", "-D__ARM__=1", "-D__EA64__=1"],
             #[cfg(all(target_os = "macos", target_arch = "x86_64"))]
             &["-std=c++17", "-D__MACOS__=1", "-D__EA64__=1"],
-            #[cfg(target_os = "windows")]
+            #[cfg(all(target_os = "windows", target_arch = "aarch64"))]
+            &[
+                "-std=c++17",
+                "-D__NT__=1",
+                "-D__ARM__=1",
+                "-D__EA64__=1",
+                "-D_CRT_USE_BUILTIN_OFFSETOF",
+            ],
+            #[cfg(all(target_os = "windows", not(target_arch = "aarch64")))]
             &[
                 "-std=c++17",
                 "-D__NT__=1",
@@ -93,13 +109,17 @@ fn main() {
 
     #[cfg(target_os = "windows")]
     {
-        builder
+        let b = builder
             .cargo_warnings(false)
             .cpp(true)
             .std("c++17")
             .define("__NT__", "1")
-            .define("__EA64__", "1")
-            .compile("libida-stubs");
+            .define("__EA64__", "1");
+
+        #[cfg(target_arch = "aarch64")]
+        let b = b.define("__ARM__", "1");
+
+        b.compile("libida-stubs");
     }
 
     let pod = autocxx_bindgen::builder()
