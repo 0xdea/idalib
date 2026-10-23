@@ -1,4 +1,3 @@
-use std::ffi::c_char;
 use std::mem;
 
 use bitflags::bitflags;
@@ -188,12 +187,12 @@ impl Operand {
         OperandFlags::from_bits_retain(self.inner.flags)
     }
 
-    pub fn offb(&self) -> c_char {
-        self.inner.offb
+    pub fn offb(&self) -> i8 {
+        self.inner.offb as _
     }
 
-    pub fn offo(&self) -> c_char {
-        self.inner.offo
+    pub fn offo(&self) -> i8 {
+        self.inner.offo as _
     }
 
     pub fn n(&self) -> usize {
@@ -291,33 +290,33 @@ impl Operand {
         }
     }
 
-    pub fn processor_specific_flag1(&self) -> Option<c_char> {
+    pub fn processor_specific_flag1(&self) -> Option<i8> {
         if self.is_processor_specific() {
-            Some(self.inner.specflag1)
+            Some(self.inner.specflag1 as _)
         } else {
             None
         }
     }
 
-    pub fn processor_specific_flag2(&self) -> Option<c_char> {
+    pub fn processor_specific_flag2(&self) -> Option<i8> {
         if self.is_processor_specific() {
-            Some(self.inner.specflag2)
+            Some(self.inner.specflag2 as _)
         } else {
             None
         }
     }
 
-    pub fn processor_specific_flag3(&self) -> Option<c_char> {
+    pub fn processor_specific_flag3(&self) -> Option<i8> {
         if self.is_processor_specific() {
-            Some(self.inner.specflag3)
+            Some(self.inner.specflag3 as _)
         } else {
             None
         }
     }
 
-    pub fn processor_specific_flag4(&self) -> Option<c_char> {
+    pub fn processor_specific_flag4(&self) -> Option<i8> {
         if self.is_processor_specific() {
-            Some(self.inner.specflag4)
+            Some(self.inner.specflag4 as _)
         } else {
             None
         }
