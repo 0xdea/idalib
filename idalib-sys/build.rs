@@ -192,8 +192,5 @@ fn main() {
 
     println!("cargo::metadata=sdk={}", sdk_path.display());
 
-    println!(
-        "cargo::rerun-if-changed={}",
-        ffi_path.join("lib.rs").display()
-    );
+    println!("cargo::rerun-if-changed={}", ffi_path.display());
 }
